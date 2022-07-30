@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace CleanArchMvc.Application.DTOs {
-    class ProductDTO {
+    public class ProductDTO {
         public int Id { get; set; }
 
         [Required(ErrorMessage = "The Name is Required")]
