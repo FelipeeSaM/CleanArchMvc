@@ -2,47 +2,45 @@
 using CleanArchMvc.Domain.Interfaces;
 using CleanArchMvc.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CleanArchMvc.Infra.Data.Repositories {
     public class ProductRepository : IProductRepository {
-        ApplicationDbContext _productRepository;
-
+        private ApplicationDbContext _productContext;
         public ProductRepository(ApplicationDbContext context) {
-
+            _productContext = context;
         }
 
         public async Task<Product> CreateAsync(Product product) {
-            _productRepository.Add(product);
-            await _productRepository.SaveChangesAsync();
+            _productContext.Add(product);
+            await _productContext.SaveChangesAsync();
             return product;
         }
 
         public async Task<Product> GetByIdAsync(int? id) {
-            return await _productRepository.Products.FindAsync(id);
+            return await _productContext.Products.FindAsync(id);
         }
 
         public async Task<Product> GetProductCategoryAsync(int? id) {
-            return await _productRepository.Products.Include(c => c.Category).SingleOrDefaultAsync(p => p.Id == id);
+            //eager loading
+            return await _productContext.Products.Include(c => c.Category)
+                .SingleOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task<IEnumerable<Product>> GetProductsAsync() {
-            return await _productRepository.Products.ToListAsync();
+            return await _productContext.Products.ToListAsync();
         }
 
         public async Task<Product> RemoveAsync(Product product) {
-            _productRepository.Remove(product);
-            await _productRepository.SaveChangesAsync();
+            _productContext.Remove(product);
+            await _productContext.SaveChangesAsync();
             return product;
         }
 
         public async Task<Product> UpdateAsync(Product product) {
-            _productRepository.Update(product);
-            await _productRepository.SaveChangesAsync();
+            _productContext.Update(product);
+            await _productContext.SaveChangesAsync();
             return product;
         }
     }
