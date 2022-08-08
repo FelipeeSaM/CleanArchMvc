@@ -19,7 +19,6 @@ namespace CleanArchMvc.WebUI.Controllers {
 
         [HttpGet()]
         public IActionResult Create() {
-
             return View();
         }
 
@@ -32,19 +31,15 @@ namespace CleanArchMvc.WebUI.Controllers {
             return View(category);
         }
 
-        [HttpGet]
+        [HttpGet()]
         public async Task<IActionResult> Edit(int? id) {
-            if (id == null) {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
             var categoryDto = await _categoryService.GetById(id);
-            if (categoryDto == null) {
-                return NotFound();
-            }
+            if (categoryDto == null) return NotFound();
             return View(categoryDto);
         }
 
-        [HttpPost]
+        [HttpPost()]
         public async Task<IActionResult> Edit(CategoryDTO categoryDto) {
             if (ModelState.IsValid) {
                 try {
@@ -58,33 +53,33 @@ namespace CleanArchMvc.WebUI.Controllers {
             return View(categoryDto);
         }
 
-        [HttpGet]
+        [HttpGet()]
         public async Task<IActionResult> Delete(int? id) {
-            if (id == null) {
+            if (id == null)
                 return NotFound();
-            }
+
             var categoryDto = await _categoryService.GetById(id);
-            if (categoryDto == null) {
-                return NotFound();
-            }
+
+            if (categoryDto == null) return NotFound();
+
             return View(categoryDto);
         }
 
-        [HttpGet(), ActionName("Delete")]
+        [HttpPost(), ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id) {
             await _categoryService.Remove(id);
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
         public async Task<IActionResult> Details(int? id) {
-            if (id == null) {
+            if (id == null)
                 return NotFound();
-            }
+
             var categoryDto = await _categoryService.GetById(id);
-            if (categoryDto == null) {
+
+            if (categoryDto == null)
                 return NotFound();
-            }
+
             return View(categoryDto);
         }
     }
