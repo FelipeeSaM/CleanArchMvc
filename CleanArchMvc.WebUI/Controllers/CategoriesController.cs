@@ -5,7 +5,7 @@ using System;
 using System.Threading.Tasks;
 
 namespace CleanArchMvc.WebUI.Controllers {
-    public class CategoriesController : Controller {
+    public class CategoriesController : Controller { //controllers são responsáveis pelos metodos get e post http
         private readonly ICategoryService _categoryService;
         public CategoriesController(ICategoryService categoryService) {
             _categoryService = categoryService;
