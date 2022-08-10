@@ -1,5 +1,6 @@
 ﻿using CleanArchMvc.Application.DTOs;
 using CleanArchMvc.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -66,7 +67,8 @@ namespace CleanArchMvc.WebUI.Controllers {
             return View(productDTO);
         }
 
-        [HttpGet]
+        [Authorize(Roles ="Admin")]
+        [HttpGet()]
         public async Task<IActionResult> Delete(int? id) {
             if (id == null) {
                 return NotFound();

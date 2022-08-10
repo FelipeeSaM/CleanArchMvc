@@ -1,10 +1,12 @@
 ﻿using CleanArchMvc.Application.DTOs;
 using CleanArchMvc.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 
 namespace CleanArchMvc.WebUI.Controllers {
+    [Authorize]
     public class CategoriesController : Controller { //controllers são responsáveis pelos metodos get e post http
         private readonly ICategoryService _categoryService;
         public CategoriesController(ICategoryService categoryService) {
