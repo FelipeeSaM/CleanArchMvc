@@ -25,11 +25,9 @@ namespace CleanArchMVC.API {
         public void ConfigureServices(IServiceCollection services) {
 
             services.AddInfrastructureAPI(Configuration);
+            services.AddInfrastructureJWT(Configuration);
+            services.AddInfrastructureSwagger();
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "CleanArchMVC.API", Version = "v1" });
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +42,8 @@ namespace CleanArchMVC.API {
 
             app.UseRouting();
 
+            app.UseStatusCodePages();
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
